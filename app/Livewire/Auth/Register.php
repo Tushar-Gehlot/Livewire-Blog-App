@@ -29,11 +29,13 @@ class Register extends Component
     {
         $this->validate();
 
-        User::create([
+        $user = User::create([
             'name' => $this->name,
             'email' => $this->email,
             'password' => Hash::make($this->password),
         ]);
+
+        $user->assignRole('user');
 
         $credentials = [
             'email' => $this->email,
