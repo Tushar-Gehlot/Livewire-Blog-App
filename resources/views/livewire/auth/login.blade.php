@@ -3,6 +3,9 @@
 
         <div class="card">
             <div class="card-header">Login</div>
+            @if (session()->has('status'))
+                <div class="alert alert-success">{{ session('status') }}</div>
+            @endif
             <div class="card-body">
                 <form wire:submit="login">
                     <div class="mb-3 row">

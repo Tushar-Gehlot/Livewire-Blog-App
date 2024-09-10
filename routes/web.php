@@ -5,6 +5,8 @@ use App\Livewire\Auth\Register;
 use App\Livewire\Auth\Login;
 use App\Livewire\Dashboard\Dashboard;
 use App\Livewire\Auth\Logout;
+use App\Livewire\Auth\PasswordReset;
+use App\Livewire\Auth\PasswordResetRequest;
 use App\Livewire\UserManagement\Userslist;
 use App\Livewire\UserManagement\CreateUser;
 
@@ -22,4 +24,6 @@ Route::group(['middleware'=>'auth'], function(){
     Route::get('/users', Userslist::class)->name('get.users');
     Route::get('/logout', Logout::class)->name('logout');
     Route::get('/create-user',CreateUser::class)->name('create.user');
+    Route::get('password/reset/{token}/{email}', PasswordReset::class)->name('password.reset');
+    Route::get('password/reset', PasswordResetRequest::class)->name('password.request');
 });
