@@ -5,7 +5,7 @@
     </div>
     <div class="col-md-9">
         @role('admin')
-            @livewire('userslist')
+            @livewire('user-management.userslist')
         @endrole
     </div>
 </div>

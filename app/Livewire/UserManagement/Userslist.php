@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\UserManagement;
 
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -29,7 +29,7 @@ class Userslist extends Component
 
         $roles = Role::all();
 
-        return view('livewire.userslist', [
+        return view('livewire.user-management.userslist', [
             'users' => $users,'roles' => $roles
         ]);
     }
