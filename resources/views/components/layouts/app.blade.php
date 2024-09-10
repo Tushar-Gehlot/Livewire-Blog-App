@@ -31,7 +31,13 @@
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 {{ Auth::user()->name }}
                             </a>
-                            <livewire:auth.logout />
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{{ route('profile') }}">Profile</a></li>
+                                <li><a class="dropdown-item" href="">Change Password</a></li>
+                                <li>
+                                    <livewire:auth.logout />
+                                </li>
+                            </ul>
                         </li>
                     @endguest
                 </ul>
