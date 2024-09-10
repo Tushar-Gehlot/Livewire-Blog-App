@@ -9,6 +9,17 @@
             {{ session('user-updated') }}
         </div>
     @endif
+    @if (session()->has('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+    @if (session()->has('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+
     {{-- <!-- Search Input -->
     <input type="text" wire:model.debounce.500ms="search" class="form-control" placeholder="Search users..."> --}}
     <div class="text-end">

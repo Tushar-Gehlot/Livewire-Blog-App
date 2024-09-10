@@ -7,6 +7,8 @@ use Livewire\Component;
 use App\Models\User;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Log;
 
 class CreateUser extends Component
 {
@@ -46,7 +48,16 @@ class CreateUser extends Component
             $user->syncPermissions($this->permissions);
         }
 
-        session()->flash('success', 'User created successfully!');
+        $status = Password::sendResetLink(['email' => $this->email]);
+
+        if ($status === Password::RESET_LINK_SENT) {
+            session()->flash('success', 'User created successfully and password reset email sent!');
+        } else {
+            session()->flash('error', 'User created, but failed to send password reset email.');
+            Log::error('Password error:' .$status);
+        }
+
+        // session()->flash('success', 'User created successfully!');
 
         // Reset form fields
         $this->reset(['name', 'email', 'password', 'role', 'permissions']);
