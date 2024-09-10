@@ -4,8 +4,8 @@
         @livewire('common.sidebar')
     </div>
     <div class="col-md-9">
-        @role('admin')
+        @can('view users')
             @livewire('user-management.userslist')
-        @endrole
+        @endcan
     </div>
 </div>

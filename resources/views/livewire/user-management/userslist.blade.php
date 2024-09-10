@@ -12,7 +12,7 @@
     {{-- <!-- Search Input -->
     <input type="text" wire:model.debounce.500ms="search" class="form-control" placeholder="Search users..."> --}}
     <div class="text-end">
-        <a href="#" class="btn btn-primary right">Create User</a>
+        <a href="{{ route('create.user') }}" class="btn btn-primary right">Create User</a>
     </div>
 
     <!-- User List -->
@@ -74,13 +74,25 @@
 
                         <div class="mb-3">
                             <label for="role" class="form-label">Role</label>
-                            <select id="role" wire:model="role" class="form-control">
-                                <option disabled>Select a role</option>
-                                @foreach($roles as $role)
-                                    <option value="{{ $role->name }}">{{ $role->name }}</option>
-                                @endforeach
-                            </select>
+                            @foreach ($roles as $role)
+                                <div class="form-check form-check-inline">
+                                    <input type="checkbox" id="{{ $role->id }}" class="form-check-input" wire:model="role" value="{{ $role->name }}"
+                                    {{ in_array($role->name, $this->role) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="{{ $role->id }}">{{ ucfirst($role->name) }}</label>
+                                </div>
+                            @endforeach
                             @error('role') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label for="permissions">Permissions</label><br>
+                            @foreach ($allPermissions as $permission)
+                                <div class="form-check form-check-inline">
+                                    <input type="checkbox" class="form-check-input" wire:model="permissions" value="{{ $permission->name }}"
+                                    {{ in_array($permission->name, $this->permissions) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="{{ $permission->name }}">{{ ucfirst($permission->name) }}</label>
+                                </div>
+                            @endforeach
+                            @error('permissions') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" wire:click="$set('showModal', false)" data-bs-dismiss="modal">Close</button>

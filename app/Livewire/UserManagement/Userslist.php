@@ -7,6 +7,7 @@ use Livewire\WithPagination;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Livewire\Attributes\Title;
+use Spatie\Permission\Models\Permission;
 
 #[Title('Dashboard')]
 class Userslist extends Component
@@ -15,7 +16,7 @@ class Userslist extends Component
 
     public $search = '';
     public $selectedUserId = null;
-    public $name, $email, $password,$role;
+    public $name, $email, $password, $permissions = [], $role = [];
     public $showModal = false;
 
     // Define pagination properties
@@ -28,9 +29,10 @@ class Userslist extends Component
             ->paginate(10);
 
         $roles = Role::all();
+        $allPermissions = Permission::all();
 
         return view('livewire.user-management.userslist', [
-            'users' => $users,'roles' => $roles
+            'users' => $users,'roles' => $roles,'allPermissions' => $allPermissions
         ]);
     }
 
@@ -40,7 +42,8 @@ class Userslist extends Component
         $this->selectedUserId = $userId;
         $this->name = $user->name;
         $this->email = $user->email;
-        $this->role = $user->roles->pluck('name')->first();
+        $this->role = $user->roles->pluck('name')->toArray();
+        $this->permissions = $user->permissions->pluck('name')->toArray();
         $this->showModal = true;
         $this->dispatch('showModal');
     }
@@ -51,6 +54,7 @@ class Userslist extends Component
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email,' . $this->selectedUserId,
             'role' => 'required|exists:roles,name',
+            'permissions' => 'required'
         ]);
 
         $user = User::find($this->selectedUserId);
@@ -60,7 +64,13 @@ class Userslist extends Component
         $user->save();
 
         //update the role
-        $user->syncRoles([$this->role]);
+        if (!empty($this->role)) {
+            $user->syncRoles([$this->role]);
+        }
+
+        if (!empty($this->permissions)) {
+            $user->syncPermissions($this->permissions);
+        }
 
         session()->flash('user-updated', 'User updated successfully!');
 
