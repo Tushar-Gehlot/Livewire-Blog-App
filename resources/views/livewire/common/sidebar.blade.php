@@ -1,12 +1,13 @@
 <div class="d-flex">
     <div class="sidebar">
         <ul class="menu-list">
-            @role('admin')
+            @can('view users')
                 <li><a href="{{ route('dashboard') }}"><i class="fas fa-users"></i> Users</a></li>
-            @endrole
-            @role('admin|user')
+            @endcan
+
+            @can('view posts')
                 <li><a href="#"><i class="fas fa-clipboard"></i> Posts</a></li>
-            @endrole
+            @endcan
         </ul>
     </div>
 
