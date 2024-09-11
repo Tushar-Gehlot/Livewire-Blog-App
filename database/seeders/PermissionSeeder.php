@@ -16,6 +16,18 @@ class PermissionSeeder extends Seeder
         $viewUsers = Permission::firstOrCreate(['name' => 'view users']);
         $viewPosts = Permission::firstOrCreate(['name' => 'view posts']);
 
+        $permissions = [
+            'view users',
+            'view posts',
+            'create posts',
+            'edit posts',
+            'delete posts',
+        ];
+
+        foreach ($permissions as $permission) {
+            Permission::firstOrCreate(['name' => $permission]);
+        }
+
         // Check if roles exist before assigning
         $adminRole = Role::firstOrCreate(['name' => 'admin']);
         $userRole = Role::firstOrCreate(['name' => 'user']);

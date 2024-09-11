@@ -9,7 +9,7 @@ use Spatie\Permission\Models\Role;
 use Livewire\Attributes\Title;
 use Spatie\Permission\Models\Permission;
 
-#[Title('Dashboard')]
+#[Title('Users List')]
 class Userslist extends Component
 {
     use WithPagination;
@@ -22,11 +22,21 @@ class Userslist extends Component
     // Define pagination properties
     protected $paginationTheme = 'bootstrap';
 
+    public function mount()
+    {
+        if (!auth()->user()->can('view users')) {
+            abort(403);
+        }
+    }
+
     public function render()
     {
         $users = User::with('roles', 'permissions')
             ->where('id', '!=', auth()->id())
-            ->paginate(10);
+            ->whereDoesntHave('roles', function($query) {
+                $query->where('name', 'admin');
+            })
+            ->paginate(5);
 
         $roles = Role::all();
         $allPermissions = Permission::all();
