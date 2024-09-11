@@ -7,6 +7,9 @@ use App\Livewire\Dashboard\Dashboard;
 use App\Livewire\Auth\Logout;
 use App\Livewire\Auth\PasswordReset;
 use App\Livewire\Auth\PasswordResetRequest;
+use App\Livewire\Posts\PostCreate;
+use App\Livewire\Posts\PostEdit;
+use App\Livewire\Posts\PostIndex;
 use App\Livewire\Profile\Profile;
 use App\Livewire\UserManagement\Userslist;
 use App\Livewire\UserManagement\CreateUser;
@@ -28,4 +31,7 @@ Route::group(['middleware'=>'auth'], function(){
     Route::get('password/reset/{token}/{email}', PasswordReset::class)->name('password.reset');
     Route::get('password/reset', PasswordResetRequest::class)->name('password.request');
     Route::get('/profile', Profile::class)->name('profile');
+    Route::get('/posts',PostIndex::class)->name('posts.index');
+    Route::get('/posts/create', PostCreate::class)->name('post.create');
+    Route::get('/posts/edit/{id}', PostEdit::class)->name('post.edit');
 });

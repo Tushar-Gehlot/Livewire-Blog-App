@@ -2,11 +2,11 @@
     <div class="sidebar">
         <ul class="menu-list">
             @can('view users')
-                <li><a href="{{ route('dashboard') }}"><i class="fas fa-users"></i> Users</a></li>
+                <li><a href="{{ route('get.users') }}"><i class="fas fa-users"></i> Users</a></li>
             @endcan
 
             @can('view posts')
-                <li><a href="#"><i class="fas fa-clipboard"></i> Posts</a></li>
+                <li><a href="{{ route('posts.index') }}"><i class="fas fa-clipboard"></i> Posts</a></li>
             @endcan
         </ul>
     </div>
