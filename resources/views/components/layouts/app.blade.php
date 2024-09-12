@@ -33,7 +33,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="{{ route('profile') }}">Profile</a></li>
-                                <li><a class="dropdown-item" href="">Change Password</a></li>
+                                <li><a class="dropdown-item" href="{{ route('change-password') }}">Change Password</a></li>
                                 <li>
                                     <livewire:auth.logout />
                                 </li>

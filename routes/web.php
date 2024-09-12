@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\Auth\ChangePassword;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Auth\Register;
 use App\Livewire\Auth\Login;
@@ -31,6 +32,7 @@ Route::group(['middleware'=>'auth'], function(){
     Route::get('password/reset/{token}/{email}', PasswordReset::class)->name('password.reset');
     Route::get('password/reset', PasswordResetRequest::class)->name('password.request');
     Route::get('/profile', Profile::class)->name('profile');
+    Route::get('/change-password', ChangePassword::class)->name('change-password');
     Route::get('/posts',PostIndex::class)->name('posts.index');
     Route::get('/posts/create', PostCreate::class)->name('post.create');
     Route::get('/posts/edit/{id}', PostEdit::class)->name('post.edit');
