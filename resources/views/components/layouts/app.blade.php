@@ -51,8 +51,9 @@
             @if (session()->has('message'))
                 <div class="row justify-content-center text-center mt-3">
                     <div class="col-md-8">
-                        <div class="alert alert-success" role="alert">
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
                             {{ session('message') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     </div>
                 </div>
