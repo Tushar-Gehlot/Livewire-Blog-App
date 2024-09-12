@@ -15,6 +15,7 @@ class Userslist extends Component
     use WithPagination;
 
     public $search = '';
+    public $days = '';
     public $selectedUserId = null;
     public $name, $email, $password, $permissions = [], $role = [];
     public $showModal = false;
@@ -29,12 +30,22 @@ class Userslist extends Component
         }
     }
 
+
     public function render()
     {
         $users = User::with('roles', 'permissions')
             ->where('id', '!=', auth()->id())
             ->whereDoesntHave('roles', function($query) {
                 $query->where('name', 'admin');
+            })
+            ->when($this->search, function($query) {
+                $query->where(function($query) {
+                    $query->where('name','like','%'.$this->search.'%')
+                    ->orWhere('email','like','%'.$this->search.'%');
+                });
+            })
+            ->when($this->days, function($query) {
+                $query->where('created_at', '>=' ,now()->subDays($this->days));
             })
             ->paginate(5);
 
@@ -44,6 +55,16 @@ class Userslist extends Component
         return view('livewire.user-management.userslist', [
             'users' => $users,'roles' => $roles,'allPermissions' => $allPermissions
         ]);
+    }
+
+    public function updatedSearch()
+    {
+        $this->resetPage(); // Reset to page 1 when search input changes
+    }
+
+    public function updatedDays()
+    {
+        $this->resetPage(); // Reset to page 1 when days filter changes
     }
 
     public function edit($userId)

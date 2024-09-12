@@ -29,10 +29,23 @@
             </div>
         @endif
 
-        {{-- <!-- Search Input -->
-        <input type="text" wire:model.debounce.500ms="search" class="form-control" placeholder="Search users..."> --}}
         <div class="text-end">
             <a href="{{ route('create.user') }}" class="btn btn-primary right">Create User</a>
+        </div>
+        <div class="row mb-2">
+            <div class="col-auto">
+                <!-- Search Input -->
+                <input type="text" wire:model.live="search" class="form-control" placeholder="Search users...">
+            </div>
+            <div class="col-auto">
+                <!-- Search Input -->
+                <select class="form-select" wire:model.live="days">
+                    <option value="" disabled selected>Select Days</option>
+                    <option value="2">2 days ago</option>
+                    <option value="5">5 days ago</option>
+                    <option value="7">7 days ago</option>
+                </select>
+            </div>
         </div>
 
         <!-- User List -->
