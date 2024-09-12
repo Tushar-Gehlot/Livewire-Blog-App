@@ -133,8 +133,11 @@
             });
 
             Livewire.on('hideModal', () => {
-                const editModal = new bootstrap.Modal(document.getElementById('editModal'));
-                editModal.hide();
+                const editModal = document.getElementById('editModal');
+                const modal = bootstrap.Modal.getInstance(editModal);
+                if (modal) {
+                    modal.hide();
+                }
             });
         });
     </script>
